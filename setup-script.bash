@@ -40,7 +40,9 @@ echo "FETCHING git dependencies..."
 mkdir -p allo/deps
 git submodule add https://github.com/alloverse/alloui-lua allo/deps/alloui
 git submodule update --init --recursive allo/deps/alloui
+git submodule add https://github.com/luapower/luajit.git allo/deps/luajit-bin
 
 echo
-echo "DOWNLOADING binaries..."
-mkdir -p allo/lib
+echo "DOWNLOADING libraries using assist..."
+
+./allo/assist upgrade

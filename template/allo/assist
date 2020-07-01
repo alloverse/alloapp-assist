@@ -1,3 +1,45 @@
-#!/usr/local/env bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-echo "Alloverse App Assistant"
+HERE=`dirname $0`
+LUAJIT="$HERE/deps/luajit-bin/luajit"
+
+do_help () {
+    echo "Usage: assist <verb>"
+    echo "Verbs:"
+    echo "    fetch"
+    echo "        Download the version of dependencies indicated in lockfiles"
+    echo "    upgrade"
+    echo "        Figures out what the latest version of all dependencies is, upgrades"
+    echo "        the lockfiles, and then does a fetch of them."
+    echo "    run <url>"
+    echo "        Runs your alloapp and connects it to <url>"
+    exit
+}
+
+do_upgrade () {
+    echo "Upgrading allonet..."
+    # https://github.com/alloverse/allovisor-unity/blob/master/Assets/Code/Editor/AlloVisorBuild.cs
+    curl -fsSL "https://dev.azure.com/alloverse/allonet/_apis/build/builds?api-version=5.0" > $HERE/builds.json
+    $LUAJIT $HERE/assist.lua $HERE create-lock
+}
+
+do_fetch () {
+    echo "Fetching allonet..."
+    echo "NOT IMPLEMENTED YET :("
+}
+
+
+case $1 in
+    upgrade )
+        do_upgrade
+        do_fetch
+    ;;
+    fetch )
+        do_fetch
+    ;;
+    * )
+        do_help
+    ;;
+esac
