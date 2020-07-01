@@ -7,27 +7,40 @@ IFS=$'\n\t'
 echo "Alloverse app setup wizard"
 echo "--------------------------"
 
-if [ -f "allo" ]; then
+if [ -d "allo" ]; then
     echo "Project already initialized; use \`./allo/assist upgrade\` to fetch latest version."
     exit
 fi
 
-read -p "Create new project in $(pwd)? (y/N) " answer
+PROJNAME=`basename $(pwd)`
+
+read -p "Create new project '$PROJNAME'? (y/N) " answer
 if [ "$answer" != "y" ] ; then
     echo "Exiting..."
     exit
+fi
+
+if [ ! -d ".git" ]; then
+    echo "git init'ing"
+    git init
 fi
 
 echo
 echo "Extracting template app..."
 
 base64 -d <<EOF | tar xz
-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
+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
 EOF
+
+sed -i "s#__PROJNAME__#${PROJNAME}#g" lua/main.lua
+
+echo
+echo "Fetching git dependencies..."
+
+mkdir -p allo/deps
+git submodule add https://github.com/alloverse/alloui-lua allo/deps/alloui
+git submodule update --init --recursive allo/deps/alloui
 
 echo
 echo "Downloading binaries..."
-
-
-exit 0
-START OF DATA
+mkdir -p allo/lib
