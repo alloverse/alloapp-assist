@@ -31,6 +31,10 @@ do_fetch () {
     $LUAJIT $HERE/assist.lua $HERE fetch $(cat $HERE/allonet.lock)
 }
 
+do_run () {
+    $LUAJIT $HERE/boot.lua $HERE/.. $1
+}
+
 if [ "$#" -lt 1 ]; then
     do_help
     exit
@@ -43,6 +47,13 @@ case $1 in
     ;;
     fetch )
         do_fetch
+    ;;
+    run )
+        if [ "$#" -lt 2 ]; then
+            do_help
+            exit
+        fi
+        do_run $2
     ;;
     * )
         do_help
