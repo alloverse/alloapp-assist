@@ -27,6 +27,7 @@ do_upgrade () {
 
 do_fetch () {
     echo "Fetching allonet..."
+    mkdir -p $HERE/lib/osx64 $HERE/lib/win64 $HERE/lib/linux64
     $LUAJIT $HERE/assist.lua $HERE fetch $(cat $HERE/allonet.lock)
 }
 

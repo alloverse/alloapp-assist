@@ -45,5 +45,4 @@ git submodule add https://github.com/luapower/luajit.git allo/deps/luajit-bin
 echo
 echo "DOWNLOADING libraries using assist..."
 
-mkdir -p allo/lib/osx64 allo/lib/win64 allo/lib/linux64
 ./allo/assist upgrade
