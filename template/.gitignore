@@ -1,3 +1,4 @@
 allo/**/*.dll
 allo/**/*.dylib
+allo/**/*.bundle
 allo/**/*.so

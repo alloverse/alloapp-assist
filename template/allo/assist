@@ -27,9 +27,13 @@ do_upgrade () {
 
 do_fetch () {
     echo "Fetching allonet..."
-    echo "NOT IMPLEMENTED YET :("
+    $LUAJIT $HERE/assist.lua $HERE fetch $(cat $HERE/allonet.lock)
 }
 
+if [ "$#" -lt 1 ]; then
+    do_help
+    exit
+fi
 
 case $1 in
     upgrade )
