@@ -4,6 +4,16 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Windows;;
+    MINGW*)     machine=Windows;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+
 echo "Alloverse app setup wizard"
 echo "--------------------------"
 
@@ -28,11 +38,18 @@ fi
 echo
 echo "EXTRACTING template app..."
 
-base64 -d <<EOF | tar xz
+if [[ "$machine" == "Windows" ]]
+then
+    baseargs="-d"
+else
+    baseargs="-D"
+fi
+base64 $baseargs <<EOF | tar xz
 BASE64ENCODEDTGZ
 EOF
 
-sed -i "s#__PROJNAME__#${PROJNAME}#g" lua/main.lua
+sed -i".bak" "s#__PROJNAME__#${PROJNAME}#g" lua/main.lua
+rm lua/main.lua.bak
 
 echo
 echo "FETCHING git dependencies..."
