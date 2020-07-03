@@ -1,5 +1,5 @@
 local client = Client(
-    arg[1], 
+    arg[2], 
     "__PROJNAME__"
 )
 local app = App(client)
