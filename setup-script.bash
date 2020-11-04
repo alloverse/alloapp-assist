@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# ___PLACEHOLDERWARN
 
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
