@@ -10,12 +10,12 @@ cd ..
 cat setup-script.bash > setup.bash
 
 plat="$(uname -s)"
-if [[ "$plat" == CYGWIN* ]] || [[ "$plat" == MINGW* ]]
+if [[ "$plat" == Darwin ]]
 then
-    PAYLOAD=$(base64 -w 0 payload.tgz)
-    sed -i "s#BASE64ENCODEDTGZ#${PAYLOAD}#g" setup.bash
-else
     PAYLOAD=$(base64 payload.tgz)
     sed -i "" "s#BASE64ENCODEDTGZ#${PAYLOAD}#g" setup.bash
+else
+    PAYLOAD=$(base64 -w 0 payload.tgz)
+    sed -i "s#BASE64ENCODEDTGZ#${PAYLOAD}#g" setup.bash
 fi
 
