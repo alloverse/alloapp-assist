@@ -39,11 +39,11 @@ fi
 echo
 echo "EXTRACTING template app..."
 
-if [[ "$machine" == "Windows" ]]
+if [[ "$machine" == "Mac" ]]
 then
-    baseargs="-d"
-else
     baseargs="-D"
+else
+    baseargs="-d"
 fi
 base64 $baseargs <<EOF | tar xz
 BASE64ENCODEDTGZ
