@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 # ___PLACEHOLDERWARN
 
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
@@ -56,9 +56,9 @@ echo
 echo "FETCHING git dependencies..."
 
 mkdir -p allo/deps
-git submodule add https://github.com/alloverse/alloui-lua allo/deps/alloui
+git submodule add -f https://github.com/alloverse/alloui-lua allo/deps/alloui
 git submodule update --init --recursive allo/deps/alloui
-git submodule add https://github.com/luapower/luajit.git allo/deps/luajit-bin
+git submodule add -f https://github.com/luapower/luajit.git allo/deps/luajit-bin
 
 echo
 echo "DOWNLOADING libraries using assist..."

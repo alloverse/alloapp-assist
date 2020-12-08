@@ -10,7 +10,7 @@ In short:
 ```
 $ mkdir myproj
 $ cd myproj
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/alloverse/alloapp-assist/master/setup.bash)"
+$ /bin/bash -c '$(curl -fsSL https://raw.githubusercontent.com/alloverse/alloapp-assist/master/setup.bash)'
 ...
 $ ./allo/assist help
 ```
