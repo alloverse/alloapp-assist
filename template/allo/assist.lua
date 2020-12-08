@@ -42,7 +42,7 @@ function fetchSingle(targetVersion, artifactName, path, relDestination)
     local tempFilename = system("basename "..path)
     local renameMe = destinationFolder.."/"..tempFilename
     
-    local buildlisturl = "https://dev.azure.com/alloverse/allonet/_apis/build/builds/" .. targetVersion .. "/artifacts?artifactName=" .. artifactName .. "&api-version=5.0"
+    local buildlisturl = "https://dev.azure.com/alloverse/allonet/_apis/build/builds/" .. targetVersion .. "/artifacts?artifactName=" .. artifactName .. "&api-version=5.0&branchName=main&statusFilter=completed"
     local jsons = system("curl -fsSL \""..buildlisturl.."\"")
     local json = json.decode(jsons)
     local artifactUrl = json["resource"]["downloadUrl"]
