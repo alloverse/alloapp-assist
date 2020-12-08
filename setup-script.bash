@@ -25,8 +25,8 @@ fi
 
 PROJNAME=`basename $(pwd)`
 
-read -p "Create new project '$PROJNAME'? (y/N) " answer
-if [ "$answer" != "y" ] ; then
+read -p "Create new project '$PROJNAME'? (Y/n) " answer
+if [ "$answer" == "n" ] ; then
     echo "Exiting..."
     exit
 fi
