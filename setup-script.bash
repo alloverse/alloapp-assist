@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # ___PLACEHOLDERWARN
 
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
