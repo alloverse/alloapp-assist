@@ -36,6 +36,9 @@ package.path = package.path
 require("liballonet")
 Client = require("alloui.client")
 ui = require("alloui.ui")
+class = require('pl.class')
+tablex = require('pl.tablex')
+pretty = require('pl.pretty')
 
 -- start app
 require("main")
