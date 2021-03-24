@@ -1,10 +1,9 @@
 # Alloverse app template
 
-This is an Alloverse app. You can 
-[read about making apps](https://alloverse.com/develop-apps/)
-on Alloverse's website.
+This is an Alloverse app. You can
+[read about making apps](https://docs.alloverse.com/) here.
 
-__psst, you should summarize and explain your project here!__
+**psst, you should summarize and explain your project here!**
 
 ## Developing
 
@@ -18,14 +17,14 @@ To start the app and connect it to an Alloplace for testing, run
 
 ## Documentation
 
-We're still working on setting up a comprehensive documentation web site. Some initial documentation
+We've published an early version of a [comprehensive documentation website](https://docs.alloverse.com/), though it's not exhaustive yet. Additional documentation
 is provided in your `lua/main.lua`.
 
-The implementation of the UI library has documentation inline which you can use while we're
-working on the docs website. Navigate to `allo/deps/alloui/lua/alloui` and have a look at the various
+The implementation of the [UI library](https://docs.alloverse.com/classes/) also has some documentation inline which you can use while we're
+improving the docs website. Navigate to `allo/deps/alloui/lua/alloui` and have a look at the various
 lua files in there, and in particular the various UI elements under `views`. Some various views include:
 
-* Surface, a flat surface to put stuff on
-* Label, for displaying text
-* Button, for clicking on
-* Navstack, for drilling into nested data
+- Surface, a flat surface to put stuff on
+- Label, for displaying text
+- Button, for clicking on
+- Navstack, for drilling into nested data
