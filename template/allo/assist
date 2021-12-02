@@ -21,7 +21,7 @@ do_help () {
 do_upgrade () {
     echo "Upgrading allonet..."
     mkdir -p "$HERE/lib"
-    $LUAJIT "$HERE/assist.lua" "$HERE" upgrade
+    $LUAJIT "$HERE/assist.lua" "$HERE" upgrade "${1-}"
 }
 
 do_fetch () {
@@ -41,7 +41,7 @@ fi
 
 case $1 in
     upgrade )
-        do_upgrade
+        do_upgrade ${2-}
     ;;
     fetch )
         do_fetch

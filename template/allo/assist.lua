@@ -31,20 +31,21 @@ function fetch(version)
     local file = g_platform_file_map[g_platform].file
     download(s3_root .. "/" .. version .. "/" .. g_platform .. "/" .. file, g_here .. "/lib/" .. file)
     save_current_version(version)
+    save_locked_version(version)
 end
 
 --- Download the latest meta. If versions differ then save version to lock file, fetch the version
 function upgrade()
     local latest_version = get_latest_version()
-    local current_version = get_current_version()
-
+    
     if not latest_version then
-        return print("Failed to read latest version")
+        return print("Failed to read latest version.")
     end
+
+    local current_version = get_current_version()
 
     if not current_version or (current_version ~= latest_version) then
         print("Found new version.")
-        save_locked_version(latest_version)
         fetch(latest_version)
         return
     end
@@ -86,16 +87,16 @@ end
 --     "githash": "${BUILD_SOURCEVERSION}",
 --     "changemsg": "${BUILD_SOURCEVERSIONMESSAGE}"
 -- }
-function get_latest_json()
-    local path = "latest_" .. g_branchname .. "_" .. g_platform .. ".json"
+function get_latest_json(branch)
+    local path = "latest_" .. (branch or g_branchname) .. "_" .. g_platform .. ".json"
     local url = s3_root .. "/" .. path
     local jsons = system("curl -fsSL \"" .. url .. "\"")
     local json = json.decode(jsons)
     return json
 end
 
-function get_latest_version()
-    local latest = get_latest_json()
+function get_latest_version(branch)
+    local latest = get_latest_json(branch)
     if latest then 
         return latest["version"]
     end
@@ -161,6 +162,10 @@ function get_current_platform()
     end
 end
 
+function isversionstring(str)
+    return str:match("%d+%.%d+%.%d+%.g[a-z0-9]+") ~= nil
+end
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 
@@ -174,6 +179,18 @@ print("Current platform: " .. g_platform)
 
 if arg[2] == "fetch" then
     fetch()
-elseif arg[2] == "upgrade" then 
-    upgrade()
+elseif arg[2] == "upgrade" then
+    local version_or_branch = arg[3]
+    if version_or_branch and version_or_branch ~= "" then 
+        print("eeh ", version_or_branch)
+        if isversionstring(version_or_branch) then
+            print("Requested version " .. version_or_branch)
+            fetch(version_or_branch)
+        else
+            print("Requested branch " .. version_or_branch)
+            fetch(get_latest_version(version_or_branch))
+        end
+    else 
+        upgrade()
+    end
 end
