@@ -21,7 +21,7 @@ do_help () {
 do_upgrade () {
     echo "Upgrading allonet..."
     mkdir -p "$HERE/lib"
-    $LUAJIT $HERE/assist.lua "$HERE" upgrade
+    $LUAJIT "$HERE/assist.lua" "$HERE" upgrade
 }
 
 do_fetch () {
@@ -31,7 +31,7 @@ do_fetch () {
 }
 
 do_run () {
-    $LUAJIT $HERE/boot.lua $HERE/.. $*
+    $LUAJIT "$HERE/boot.lua" "$HERE/.." $*
 }
 
 if [ "$#" -lt 1 ]; then
@@ -42,7 +42,6 @@ fi
 case $1 in
     upgrade )
         do_upgrade
-        do_fetch
     ;;
     fetch )
         do_fetch

@@ -14,13 +14,6 @@ local g_platform_file_map = {
     ["mac-universal"] = { file = "liballonet.dylib" }
 }
 
---- Write the allonet.lock file
--- version: x.y.z.githash
-function save(version)
-    print("Latest Allonet build version is " .. version)
-    writefile(here .. "/allonet.lock", version)
-end
-
 --------------------------------------------------------------
 
 local s3_root = "http://alloverse-downloads-prod.s3-eu-north-1.amazonaws.com/allonet" --alloverse-downloads-prod/allonet/"
@@ -33,10 +26,11 @@ function fetch(version)
         return print("Could not determine version to fetch")
     end
 
-    print("Downloading version " .. version)
+    print("Downloading Allonet " .. version)
 
     local file = g_platform_file_map[g_platform].file
     download(s3_root .. "/" .. version .. "/" .. g_platform .. "/" .. file, g_here .. "/lib/" .. file)
+    save_current_version(version)
 end
 
 --- Download the latest meta. If versions differ then save version to lock file, fetch the version
@@ -49,13 +43,13 @@ function upgrade()
     end
 
     if not current_version or (current_version ~= latest_version) then
-        print("Found a new version")
-        save(latest_version)
-        fetch()
+        print("Found new version.")
+        save_locked_version(latest_version)
+        fetch(latest_version)
         return
     end
 
-    print("You are already on the latest version.")
+    print("You are already on the latest version (" .. latest_version .. ")")
 end
 
 function download(url, dest)
@@ -64,10 +58,22 @@ end
 
 -------------------------------------------------------------------
 
---- Returns None or "x.y.z.githash"
-function get_current_version() 
-    local cachefilepath = here .. "/lib/allonet.cache"
-    local currentVersion = trim(readfile(cachefilepath))
+local g_lockfile = here .. "/allonet.lock"
+function save_locked_version(version)
+    writefile(g_lockfile, version)
+end
+
+function get_locked_version()
+    return trim(readfile(g_lockfile))
+end
+
+local g_cachefilepath = here .. "/lib/allonet.cache"
+function get_current_version()
+    return trim(readfile(g_cachefilepath))
+end
+
+function save_current_version(version)
+    writefile(g_cachefilepath, version)
 end
 
 --- Returns the meta json for the latest available build
@@ -91,7 +97,7 @@ end
 function get_latest_version()
     local latest = get_latest_json()
     if latest then 
-        return latest["version"] .. "." .. latest["githash"] 
+        return latest["version"]
     end
 end
 
@@ -158,14 +164,15 @@ end
 --------------------------------------------------------------
 --------------------------------------------------------------
 
-local g_platform = get_current_platform()
+g_platform = get_current_platform()
 if not g_platform then
     print("Could not determine your platform. Please reach out to us via email or our Discord. Details on alloverse.com")
     return
 end
 
+print("Current platform: " .. g_platform)
+
 if arg[2] == "fetch" then
-    g_branchname = arg[3] or g_branchname
     fetch()
 elseif arg[2] == "upgrade" then 
     upgrade()
