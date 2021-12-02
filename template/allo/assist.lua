@@ -181,7 +181,7 @@ if arg[2] == "fetch" then
     fetch()
 elseif arg[2] == "upgrade" then
     local version_or_branch = arg[3]
-    if version_or_branch and version_or_branch ~= "" then 
+    if version_or_branch and version_or_branch ~= "" then
         print("eeh ", version_or_branch)
         if isversionstring(version_or_branch) then
             print("Requested version " .. version_or_branch)
