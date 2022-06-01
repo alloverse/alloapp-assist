@@ -48,8 +48,8 @@ if libav_available then
     ]]
     ffi.C.allo_libav_initialize()
 else
-    av = nil
     print("NOTE: liballonet_av not available, h264 cannot be used (because: "..av..")")
+    av = nil
 end
 
 Client = require("alloui.client")
